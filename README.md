@@ -1,6 +1,8 @@
-# Névoa — Tabacaria Fina
+# Névoa — Tabacaria
 
-Front-end do e-commerce da Névoa, uma loja de artigos de tabacaria. Nesta fase **tudo é mockado**: não há backend, autenticação nem gateway de pagamento.
+Front-end da loja Névoa, em Next.js. É uma página única, no modelo "parede de prateleiras": as peças ficam numa parede, e ao tocar em uma a câmera chega perto e a ficha entra por cima.
+
+Nesta fase **tudo é mockado**: não há backend, checkout nem gateway de pagamento.
 
 ## Rodando
 
@@ -11,66 +13,59 @@ npm run dev
 
 Abra http://localhost:3000.
 
-## Stack
+## Blocos da página
 
-- Next.js 16 (App Router) + React 19 + TypeScript
-- Tailwind CSS 4 (tokens da marca em `src/app/globals.css`)
-- Motion para as animações
+Na ordem em que aparecem (`src/app/page.tsx`):
 
-## Identidade
+1. **Faixa de avisos** que troca sozinha (frete, cupom, Pix).
+2. **Cabeçalho** fixo com as linhas da loja, submenu, busca, favoritos e sacola.
+3. **Herói**: "Feita pra quem" + palavra gigante que troca (enrola, acende, relaxa), com três peças que acendem em sequência.
+4. **Letreiro de marcas**, que anda sozinho e acompanha a rolagem.
+5. **Compre por ritual**: a seção fica presa na tela e a rolagem move os cartões na horizontal.
+6. **Ofertas**: trilho que arrasta com o mouse.
+7. **A loja inteira numa parede**: filtros, ordenação, e a câmera que aproxima da peça.
+8. **Você viu há pouco** (aparece depois de abrir duas peças).
+9. **Loja física**: texto que acende palavra por palavra.
+10. **Condições**, **newsletter** e **rodapé**.
 
-| Cor | Hex | Uso |
-| --- | --- | --- |
-| Verde | `#018D3E` | fundo |
-| Creme | `#FDF7E6` | texto, botões e cards de produto |
-| Vermelho | `#E71506` | etiquetas de preço, selos e destaques |
+Camadas por cima: sacola, favoritos, menu (telas pequenas), busca (tecla `/`) e a verificação de idade.
 
-Os tokens ficam em `src/app/globals.css`. O vermelho não é usado como cor de texto sobre o verde, porque o contraste é baixo.
+## Estrutura
 
-Tipografia: Bodoni Moda (títulos), Yesteryear (assinatura manuscrita) e Jost (interface).
-
-## Páginas
-
-| Rota | O que é |
+| Arquivo | O que é |
 | --- | --- |
-| `/` | Início com a **arara**: peças penduradas num varão, arraste e clique para abrir |
-| `/rituais` | **Monte o Ritual**: fila de kits, um em foco, com as peças no painel lateral |
-| `/orbita` | **Órbita**: peças flutuando em anel; a da frente dá nome ao título |
-| `/loja` | Catálogo com categorias, busca e ordenação |
-| `/produto/[slug]` | Página do produto com variações, quantidade e cálculo de frete |
-| `/checkout` | Dados, entrega, envio, pagamento (Pix, cartão, boleto) e cupom |
-| `/conta` | Tela de login/cadastro (apenas visual) |
-| `/sobre` | Institucional |
+| `src/data/products.ts` | Catálogo mockado: produtos, linhas, subdivisões e marcas |
+| `src/lib/catalog.ts` | Regras da loja (frete grátis, Pix, parcelas, cupom, contatos) e leitura do catálogo |
+| `src/lib/home.ts` | Conteúdo editorial: palavras do herói, cartões de categoria, avisos, texto da loja física |
+| `src/components/*.tsx` | Marcação dos blocos, renderizada no servidor |
+| `src/lib/runtime.ts` | Motor de interações: câmera, filtros, sacola, favoritos, busca, efeitos de rolagem |
+| `src/app/globals.css` | Todo o visual. As cores ficam nas variáveis de `:root` |
 
-Globais: verificação de idade (18+), carrinho lateral e visualização rápida do produto.
+O `runtime.ts` manipula o DOM diretamente, de propósito: as animações dependem de medir e mover elementos quadro a quadro. Ele é ligado uma vez por `StoreRuntime.tsx`.
+
+## Cores
+
+| Variável | Cor | Uso |
+| --- | --- | --- |
+| `--deep` / `--wall` | `#17110d` / `#2a2019` | tabaco escuro, o fundo da parede |
+| `--ink` / `--paper` | `#f6eee1` / `#f1e7d6` | creme: textos e botões |
+| `--liv` / `--led` | `#e3a12c` / `#f6c768` | âmbar: LED das prateleiras, faixa de avisos, destaques |
+| `--mute` | `#b8a892` | textos secundários |
 
 ## Onde ligar o backend
 
-Todo acesso a dados passa por **`src/lib/api.ts`**. Para integrar, troque o corpo das funções por chamadas à sua API:
+- **Catálogo**: troque `products` em `src/lib/catalog.ts` por dados da API.
+- **Sacola, cupom, frete e totais**: funções `add` e `renderBag` em `src/lib/runtime.ts`. Hoje a sacola vive no `localStorage` e o cupom `BEMVINDO` é fixo.
+- **Checkout e pagamento**: o botão "Finalizar compra" só mostra um aviso. O ponto está marcado com `PONTO DE INTEGRAÇÃO` no `runtime.ts`.
+- **Newsletter**: também marcada com `PONTO DE INTEGRAÇÃO`.
+- **Verificação de idade**: salva no `localStorage`. Em produção, valide a maioridade também no servidor.
 
-| Função | Hoje | Depois |
-| --- | --- | --- |
-| `getProducts`, `getProduct`, `getCategories`, `getRituals` | leem `src/data/products.ts` | catálogo do backend |
-| `quoteShipping(cep, subtotal)` | valores fixos simulados | Correios / transportadora |
-| `validateCoupon(code)` | cupons fixos (`NEVOA10`, `BEMVINDO`) | regra de cupons do backend |
-| `createOrder(input, total)` | gera um número de pedido falso | **gateway de pagamento** + criação do pedido |
+## O que é provisório
 
-Outros pontos:
-
-- **Carrinho**: `src/components/store/StoreProvider.tsx`, salvo em `localStorage`.
-- **Login**: `src/components/AccountForm.tsx`, sem autenticação.
-- **Verificação de idade**: `src/components/AgeGate.tsx`, salva em `localStorage`. Em produção vale validar a maioridade também no servidor.
-- **Preços** são sempre em centavos (`14990` = R$ 149,90).
-
-## Imagens dos produtos
-
-As fotos ficam em `public/produtos/` e são **ilustrativas**: vieram do catálogo público da loja Nova Panda e tiveram o fundo removido (WebP com transparência), o que permite o efeito de peça recortada na arara, nos rituais e na órbita. Nomes e preços dos produtos seguem as fotos, mas descrições, variações e estoque são inventados.
-
-Antes de publicar a loja, troque por fotos próprias ou com autorização de uso do fornecedor. Para cada produto em `src/data/products.ts`:
-
-- `image`: caminho do arquivo em `public/`
-- `w` e `h`: dimensões do arquivo em pixels
-- `height`: altura relativa da peça na arara e na órbita (um narguilé é mais alto que um cortador)
+- **Contatos e endereço** em `STORE` (`src/lib/catalog.ts`) são fictícios: WhatsApp `(00) 00000-0000` e "Rua do Comércio, 000".
+- **Fotos** em `public/produtos/` são ilustrativas: vieram do catálogo público de outra loja, tiveram o fundo removido e foram montadas num fundo de estúdio 4:5. Troque por fotos próprias ou autorizadas antes de publicar. Cada produto usa `<id>.webp` (800×1000) e `<id>-p.webp` (240×300).
+- **Preços, descontos, opções e estoque** são inventados.
+- As páginas de "Ajuda" do rodapé ainda não existem.
 
 ## Aviso
 
