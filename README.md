@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Névoa — Tabacaria Fina
 
-## Getting Started
+Front-end do e-commerce da Névoa, uma loja de artigos de tabacaria. Nesta fase **tudo é mockado**: não há backend, autenticação nem gateway de pagamento.
 
-First, run the development server:
+## Rodando
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js 16 (App Router) + React 19 + TypeScript
+- Tailwind CSS 4 (tokens da marca em `src/app/globals.css`)
+- Motion para as animações
 
-## Learn More
+## Identidade
 
-To learn more about Next.js, take a look at the following resources:
+| Cor | Hex | Uso |
+| --- | --- | --- |
+| Marrom | `#39282C` | fundo |
+| Bege | `#F9DF8E` | texto, botões, peças |
+| Azul bebê | `#9CB7D3` | destaques e detalhes |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Tipografia: Bodoni Moda (títulos), Yesteryear (assinatura manuscrita) e Jost (interface).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Páginas
 
-## Deploy on Vercel
+| Rota | O que é |
+| --- | --- |
+| `/` | Início com a **arara**: peças penduradas num varão, arraste e clique para abrir |
+| `/rituais` | **Monte o Ritual**: fila de kits, um em foco, com as peças no painel lateral |
+| `/orbita` | **Órbita**: peças flutuando em anel; a da frente dá nome ao título |
+| `/loja` | Catálogo com categorias, busca e ordenação |
+| `/produto/[slug]` | Página do produto com variações, quantidade e cálculo de frete |
+| `/checkout` | Dados, entrega, envio, pagamento (Pix, cartão, boleto) e cupom |
+| `/conta` | Tela de login/cadastro (apenas visual) |
+| `/sobre` | Institucional |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Globais: verificação de idade (18+), carrinho lateral e visualização rápida do produto.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Onde ligar o backend
+
+Todo acesso a dados passa por **`src/lib/api.ts`**. Para integrar, troque o corpo das funções por chamadas à sua API:
+
+| Função | Hoje | Depois |
+| --- | --- | --- |
+| `getProducts`, `getProduct`, `getCategories`, `getRituals` | leem `src/data/products.ts` | catálogo do backend |
+| `quoteShipping(cep, subtotal)` | valores fixos simulados | Correios / transportadora |
+| `validateCoupon(code)` | cupons fixos (`NEVOA10`, `BEMVINDO`) | regra de cupons do backend |
+| `createOrder(input, total)` | gera um número de pedido falso | **gateway de pagamento** + criação do pedido |
+
+Outros pontos:
+
+- **Carrinho**: `src/components/store/StoreProvider.tsx`, salvo em `localStorage`.
+- **Login**: `src/components/AccountForm.tsx`, sem autenticação.
+- **Verificação de idade**: `src/components/AgeGate.tsx`, salva em `localStorage`. Em produção vale validar a maioridade também no servidor.
+- **Preços** são sempre em centavos (`14990` = R$ 149,90).
+
+## Imagens dos produtos
+
+As peças são **ilustrações SVG provisórias** (`src/components/art/ProductArt.tsx`), desenhadas no estilo de rótulo da marca. Para usar fotos reais, preencha o campo `image` do produto e renderize `<Image />` no lugar de `<ProductArt />`. Fotos recortadas (PNG com fundo transparente) preservam o efeito da arara e da órbita.
+
+## Aviso
+
+Venda proibida para menores de 18 anos. Antes de publicar, confira as regras da Anvisa e da legislação brasileira para venda e publicidade de produtos fumígenos pela internet.
