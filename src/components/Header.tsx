@@ -28,7 +28,7 @@ export function Header() {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    <header className="sticky top-0 z-40 border-b border-brown-line/50 bg-brown/85 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-green-line/50 bg-green/85 backdrop-blur-md">
       <div className="mx-auto grid h-[4.5rem] max-w-[1500px] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-8">
         <div className="flex items-center gap-2">
           <button
@@ -53,28 +53,28 @@ export function Header() {
               href={item.href}
               aria-current={isActive(item.href) ? "page" : undefined}
               className={`eyebrow relative py-2 transition-colors hover:text-cream ${
-                isActive(item.href) ? "text-cream" : "text-cream-soft/60"
+                isActive(item.href) ? "text-cream" : "text-cream/85"
               }`}
             >
               {item.label}
               {isActive(item.href) && (
-                <motion.span layoutId="nav-dot" className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rotate-45 bg-sky" />
+                <motion.span layoutId="nav-dot" className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rotate-45 bg-red" />
               )}
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center justify-end gap-1 text-cream">
-          <Link href="/loja?buscar=1" className="hidden h-11 w-11 place-items-center transition-colors hover:text-sky sm:grid" aria-label="Buscar produtos">
+          <Link href="/loja?buscar=1" className="hidden h-11 w-11 place-items-center transition-colors hover:text-cream sm:grid" aria-label="Buscar produtos">
             <IconSearch />
           </Link>
-          <Link href="/conta" className="hidden h-11 w-11 place-items-center transition-colors hover:text-sky sm:grid" aria-label="Minha conta">
+          <Link href="/conta" className="hidden h-11 w-11 place-items-center transition-colors hover:text-cream sm:grid" aria-label="Minha conta">
             <IconUser />
           </Link>
           <button
             data-cart-target
             onClick={() => setCartOpen(true)}
-            className="relative grid h-11 w-11 place-items-center transition-colors hover:text-sky"
+            className="relative grid h-11 w-11 place-items-center transition-colors hover:text-cream"
             aria-label={`Abrir carrinho, ${count} ${count === 1 ? "item" : "itens"}`}
           >
             <IconBag />
@@ -84,7 +84,7 @@ export function Header() {
                 initial={{ scale: 0.4 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 500, damping: 18 }}
-                className="absolute right-0.5 top-1 grid h-[1.15rem] min-w-[1.15rem] place-items-center rounded-full bg-sky px-1 text-[0.65rem] font-semibold tabular-nums text-ink"
+                className="absolute right-0.5 top-1 grid h-[1.15rem] min-w-[1.15rem] place-items-center rounded-full bg-red px-1 text-[0.65rem] font-semibold tabular-nums text-cream"
               >
                 {count}
               </motion.span>
@@ -102,7 +102,7 @@ export function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex h-dvh flex-col bg-brown px-6 pb-10 pt-4 lg:hidden"
+            className="fixed inset-0 z-50 flex h-dvh flex-col bg-green px-6 pb-10 pt-4 lg:hidden"
           >
             <div className="flex items-center justify-between">
               <Logo />
@@ -120,8 +120,8 @@ export function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`block border-b border-brown-line/60 py-4 font-display text-3xl ${
-                      isActive(item.href) ? "italic text-sky" : "text-cream"
+                    className={`block border-b border-green-line/60 py-4 font-display text-3xl ${
+                      isActive(item.href) ? "italic text-cream" : "text-cream"
                     }`}
                   >
                     {item.label}
@@ -129,7 +129,7 @@ export function Header() {
                 </motion.div>
               ))}
             </nav>
-            <p className="eyebrow text-cream-soft/50">Venda proibida para menores de 18 anos</p>
+            <p className="eyebrow text-cream/80">Venda proibida para menores de 18 anos</p>
           </motion.div>
         )}
       </AnimatePresence>

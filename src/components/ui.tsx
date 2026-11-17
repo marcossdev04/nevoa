@@ -3,8 +3,8 @@ import Link from "next/link";
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <Link href="/" aria-label="Névoa, página inicial" className={`group inline-flex flex-col items-center leading-none ${className}`}>
-      <span className="font-script text-[2rem] text-cream transition-colors group-hover:text-sky">Névoa</span>
-      <span className="eyebrow -mt-0.5 !text-[0.5rem] !tracking-[0.42em] text-sky">Tabacaria</span>
+      <span className="font-script text-[2rem] text-cream transition-colors group-hover:text-cream">Névoa</span>
+      <span className="eyebrow -mt-0.5 !text-[0.5rem] !tracking-[0.42em] text-cream">Tabacaria</span>
     </Link>
   );
 }
@@ -12,7 +12,7 @@ export function Logo({ className = "" }: { className?: string }) {
 /** Divisor ornamental: — ◆ — */
 export function Ornament({ className = "" }: { className?: string }) {
   return (
-    <div className={`flex items-center justify-center gap-3 text-sky ${className}`} aria-hidden>
+    <div className={`flex items-center justify-center gap-3 text-cream ${className}`} aria-hidden>
       <span className="h-px w-10 bg-current opacity-60" />
       <svg width="18" height="10" viewBox="0 0 18 10">
         <path d="M9 0l4 5-4 5-4-5zM1.5 5L3 3.2 4.5 5 3 6.8zM13.5 5L15 3.2 16.500 5 15 6.800z" fill="currentColor" />

@@ -1,16 +1,15 @@
 @import "tailwindcss";
 
-/* Paleta Névoa: marrom, bege e azul bebê */
+/* Paleta Névoa: verde, creme e vermelho */
 @theme inline {
-  --color-brown: #39282c;
-  --color-brown-deep: #2c1e22;
-  --color-brown-soft: #46333a;
-  --color-brown-line: #5d474e;
-  --color-cream: #f9df8e;
-  --color-cream-soft: #fcefc4;
-  --color-sky: #9cb7d3;
-  --color-sky-soft: #c6d6e8;
-  --color-ink: #2b1d21;
+  --color-green: #018d3e;
+  --color-green-deep: #017433;
+  --color-green-soft: #0a9d4b;
+  --color-green-line: #46ab6d;
+  --color-cream: #fdf7e6;
+  --color-red: #e71506;
+  /* texto escuro sobre creme */
+  --color-ink: #06371b;
 
   --font-display: var(--font-bodoni), "Bodoni MT", Didot, serif;
   --font-script: var(--font-yesteryear), "Brush Script MT", cursive;
@@ -20,14 +19,14 @@
 }
 
 html {
-  background: var(--color-brown);
+  background: var(--color-green);
   color-scheme: dark;
   scroll-behavior: smooth;
 }
 
 body {
-  background: var(--color-brown);
-  color: var(--color-cream-soft);
+  background: var(--color-green);
+  color: var(--color-cream);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
@@ -39,18 +38,18 @@ body::before {
   inset: 0;
   z-index: 100;
   pointer-events: none;
-  opacity: 0.07;
+  opacity: 0.1;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 ::selection {
-  background: var(--color-sky);
-  color: var(--color-ink);
+  background: var(--color-red);
+  color: var(--color-cream);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-sky);
+  outline: 2px solid var(--color-cream);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -102,10 +101,11 @@ button:disabled {
     color: var(--color-ink);
   }
   .btn-primary:hover:not(:disabled) {
-    background: var(--color-sky);
+    background: var(--color-red);
+    color: var(--color-cream);
   }
   .btn-ghost {
-    border: 1px solid var(--color-brown-line);
+    border: 1px solid color-mix(in srgb, var(--color-cream) 55%, transparent);
     color: var(--color-cream);
   }
   .btn-ghost:hover:not(:disabled) {
@@ -116,19 +116,19 @@ button:disabled {
     width: 100%;
     min-height: 3rem;
     padding: 0.65rem 1rem;
-    border: 1px solid var(--color-brown-line);
+    border: 1px solid var(--color-green-line);
     border-radius: 0.5rem;
-    background: var(--color-brown-deep);
-    color: var(--color-cream-soft);
+    background: var(--color-green-deep);
+    color: var(--color-cream);
     font-size: 0.95rem;
     transition: border-color 0.2s;
   }
   .field::placeholder {
-    color: color-mix(in srgb, var(--color-cream-soft) 35%, transparent);
+    color: color-mix(in srgb, var(--color-cream) 55%, transparent);
   }
   .field:focus {
     outline: none;
-    border-color: var(--color-sky);
+    border-color: var(--color-cream);
   }
 
   /* moldura dupla de rótulo */
@@ -174,8 +174,8 @@ button:disabled {
   position: absolute;
   border-radius: 50%;
   filter: blur(70px);
-  background: var(--color-sky);
-  opacity: 0.1;
+  background: #3fd07f;
+  opacity: 0.22;
   animation: fog-drift 18s ease-in-out infinite alternate;
   pointer-events: none;
 }

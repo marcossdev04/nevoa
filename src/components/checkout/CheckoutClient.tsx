@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { ProductArt } from "@/components/art/ProductArt";
+import { ProductPhoto } from "@/components/ProductPhoto";
 import { useStore } from "@/components/store/StoreProvider";
 import { IconCheck, Ornament } from "@/components/ui";
 import { PIX_DISCOUNT, createOrder, quoteShipping, validateCoupon } from "@/lib/api";
@@ -117,9 +117,8 @@ export function CheckoutClient() {
   if (hydrated && lines.length === 0) {
     return (
       <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center px-4 text-center">
-        <ProductArt kind="tray" className="w-44 opacity-50" />
-        <h1 className="mt-8 font-display text-4xl text-cream">Seu carrinho está vazio</h1>
-        <p className="mt-3 text-sm text-cream-soft/65">Adicione algumas peças antes de finalizar a compra.</p>
+        <h1 className="font-display text-4xl text-cream">Seu carrinho está vazio</h1>
+        <p className="mt-3 text-sm text-cream/85">Adicione algumas peças antes de finalizar a compra.</p>
         <Link href="/loja" className="btn btn-primary mt-8">
           Ir para a loja
         </Link>
@@ -129,9 +128,9 @@ export function CheckoutClient() {
 
   return (
     <div className="mx-auto max-w-[1300px] px-4 pt-10 sm:px-8 sm:pt-14">
-      <p className="eyebrow text-sky">Finalizar compra</p>
+      <p className="eyebrow text-cream">Finalizar compra</p>
       <h1 className="mt-3 font-display text-5xl text-cream sm:text-6xl">Checkout</h1>
-      <p className="mt-4 inline-block rounded-full border border-sky/40 px-4 py-1.5 text-xs text-sky">
+      <p className="mt-4 inline-block rounded-full border border-cream/60 px-4 py-1.5 text-xs text-cream">
         Ambiente de demonstração: nenhum pagamento é processado.
       </p>
 
@@ -185,10 +184,10 @@ export function CheckoutClient() {
             </div>
 
             <div className="mt-6" aria-live="polite">
-              {shippingState === "loading" && <p className="text-sm text-cream-soft/60">Calculando o frete…</p>}
+              {shippingState === "loading" && <p className="text-sm text-cream/85">Calculando o frete…</p>}
               {shippingState === "error" && <p className="text-sm text-cream">Não conseguimos calcular o frete para esse CEP.</p>}
               {!shipping && shippingState === "idle" && (
-                <p className="text-sm text-cream-soft/50">Informe o CEP para ver as opções de envio.</p>
+                <p className="text-sm text-cream/80">Informe o CEP para ver as opções de envio.</p>
               )}
               {shipping && shippingState !== "loading" && (
                 <div role="radiogroup" aria-label="Forma de envio" className="grid gap-3 sm:grid-cols-2">
@@ -232,38 +231,38 @@ export function CheckoutClient() {
                 </Field>
               </motion.div>
             )}
-            {payment === "pix" && <p className="mt-4 text-sm text-cream-soft/60">O código Pix aparece na próxima tela, logo após confirmar o pedido.</p>}
-            {payment === "boleto" && <p className="mt-4 text-sm text-cream-soft/60">O boleto é gerado na próxima tela e enviado para o seu e-mail.</p>}
+            {payment === "pix" && <p className="mt-4 text-sm text-cream/85">O código Pix aparece na próxima tela, logo após confirmar o pedido.</p>}
+            {payment === "boleto" && <p className="mt-4 text-sm text-cream/85">O boleto é gerado na próxima tela e enviado para o seu e-mail.</p>}
           </Section>
         </div>
 
-        <aside className="h-fit rounded-2xl border border-brown-line/60 bg-brown-deep/60 p-6 lg:sticky lg:top-24">
+        <aside className="h-fit rounded-2xl border border-green-line/60 bg-green-deep/60 p-6 lg:sticky lg:top-24">
           <h2 className="font-display text-2xl text-cream">Resumo</h2>
-          <ul className="mt-5 divide-y divide-brown-line/50">
+          <ul className="mt-5 divide-y divide-green-line/50">
             {lines.map((l) => (
               <li key={`${l.productId}-${l.variant}`} className="flex items-center gap-4 py-3.5">
-                <span className="relative h-14 w-14 shrink-0 rounded-lg bg-brown">
-                  <ProductArt kind={l.product.art} tone={l.product.tone} className="absolute inset-[13%] h-[74%] w-[74%]" />
-                  <span className="absolute -right-1.5 -top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-sky px-1 text-[0.65rem] font-semibold tabular-nums text-ink">
+                <span className="relative h-14 w-14 shrink-0 rounded-lg bg-cream">
+                  <ProductPhoto product={l.product} fill sizes="56px" className="p-[10%]" />
+                  <span className="absolute -right-1.5 -top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-red px-1 text-[0.65rem] font-semibold tabular-nums text-cream">
                     {l.qty}
                   </span>
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-display text-base text-cream">{l.product.name}</span>
-                  <span className="block text-xs text-cream-soft/55">{l.variant}</span>
+                  <span className="block text-xs text-cream/80">{l.variant}</span>
                 </span>
                 <span className="text-sm tabular-nums text-cream">{formatBRL(l.total)}</span>
               </li>
             ))}
           </ul>
 
-          <div className="mt-4 border-t border-brown-line/50 pt-5">
+          <div className="mt-4 border-t border-green-line/50 pt-5">
             {coupon ? (
               <p className="flex items-center justify-between text-sm">
-                <span className="flex items-center gap-2 text-sky">
+                <span className="flex items-center gap-2 text-cream">
                   <IconCheck className="h-4 w-4" /> Cupom {coupon.code}
                 </span>
-                <button type="button" className="text-xs text-cream-soft/60 underline hover:text-cream" onClick={() => setCoupon(null)}>
+                <button type="button" className="text-xs text-cream/85 underline hover:text-cream" onClick={() => setCoupon(null)}>
                   Remover
                 </button>
               </p>
@@ -293,20 +292,20 @@ export function CheckoutClient() {
                     {couponState === "loading" ? "…" : "Aplicar"}
                   </button>
                 </div>
-                <p className="mt-2 text-xs text-cream-soft/50" aria-live="polite">
+                <p className="mt-2 text-xs text-cream/80" aria-live="polite">
                   {couponState === "error" ? <span className="text-cream">Cupom inválido ou expirado.</span> : "Experimente NEVOA10."}
                 </p>
               </div>
             )}
           </div>
 
-          <dl className="mt-5 space-y-2.5 border-t border-brown-line/50 pt-5 text-sm">
+          <dl className="mt-5 space-y-2.5 border-t border-green-line/50 pt-5 text-sm">
             <Row label="Subtotal" value={formatBRL(subtotal)} />
             {couponOff > 0 && <Row label="Cupom" value={`− ${formatBRL(couponOff)}`} accent />}
             {pixOff > 0 && <Row label="Desconto Pix" value={`− ${formatBRL(pixOff)}`} accent />}
             <Row label="Frete" value={chosen ? (chosen.price ? formatBRL(chosen.price) : "Grátis") : "A calcular"} />
-            <div className="flex items-baseline justify-between border-t border-brown-line/50 pt-4">
-              <dt className="eyebrow text-cream-soft/70">Total</dt>
+            <div className="flex items-baseline justify-between border-t border-green-line/50 pt-4">
+              <dt className="eyebrow text-cream/90">Total</dt>
               <dd className="font-display text-3xl tabular-nums text-cream">{formatBRL(total)}</dd>
             </div>
           </dl>
@@ -319,7 +318,7 @@ export function CheckoutClient() {
           <button className="btn btn-primary mt-6 w-full" disabled={submitting || !hydrated}>
             {submitting ? "Confirmando…" : "Confirmar pedido"}
           </button>
-          <p className="mt-4 text-center text-xs leading-relaxed text-cream-soft/45">
+          <p className="mt-4 text-center text-xs leading-relaxed text-cream/75">
             Ao confirmar, você declara ter 18 anos ou mais.
           </p>
         </aside>
@@ -331,8 +330,8 @@ export function CheckoutClient() {
 function Section({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
   return (
     <section>
-      <h2 className="flex items-baseline gap-3 border-b border-brown-line/60 pb-4 font-display text-2xl text-cream">
-        <span className="font-sans text-xs tabular-nums text-sky">0{n}</span>
+      <h2 className="flex items-baseline gap-3 border-b border-green-line/60 pb-4 font-display text-2xl text-cream">
+        <span className="font-sans text-xs tabular-nums text-cream">0{n}</span>
         {title}
       </h2>
       <div className="mt-6">{children}</div>
@@ -343,9 +342,9 @@ function Section({ n, title, children }: { n: string; title: string; children: R
 function Field({ label, hint, className = "", children }: { label: string; hint?: string; className?: string; children: React.ReactNode }) {
   return (
     <label className={`block ${className}`}>
-      <span className="mb-2 block text-xs text-cream-soft/70">{label}</span>
+      <span className="mb-2 block text-xs text-cream/90">{label}</span>
       {children}
-      {hint && <span className="mt-1.5 block text-xs text-cream-soft/45">{hint}</span>}
+      {hint && <span className="mt-1.5 block text-xs text-cream/75">{hint}</span>}
     </label>
   );
 }
@@ -353,17 +352,17 @@ function Field({ label, hint, className = "", children }: { label: string; hint?
 function Choice({ name, checked, onChange, title, note, right }: { name: string; checked: boolean; onChange: () => void; title: string; note: string; right?: string }) {
   return (
     <label
-      className={`flex cursor-pointer items-center gap-4 rounded-xl border px-4 py-3.5 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-sky ${
-        checked ? "border-cream bg-brown-soft/50" : "border-brown-line hover:border-cream/60"
+      className={`flex cursor-pointer items-center gap-4 rounded-xl border px-4 py-3.5 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-cream ${
+        checked ? "border-cream bg-green-soft/50" : "border-green-line hover:border-cream/60"
       }`}
     >
       <input type="radio" name={name} checked={checked} onChange={onChange} className="sr-only" />
-      <span className={`grid h-4 w-4 shrink-0 place-items-center rounded-full border ${checked ? "border-cream" : "border-brown-line"}`}>
+      <span className={`grid h-4 w-4 shrink-0 place-items-center rounded-full border ${checked ? "border-cream" : "border-green-line"}`}>
         {checked && <span className="h-2 w-2 rounded-full bg-cream" />}
       </span>
       <span className="min-w-0 flex-1">
         <span className="block text-sm text-cream">{title}</span>
-        <span className="block text-xs text-cream-soft/55">{note}</span>
+        <span className="block text-xs text-cream/80">{note}</span>
       </span>
       {right && <span className="text-sm tabular-nums text-cream">{right}</span>}
     </label>
@@ -373,8 +372,8 @@ function Choice({ name, checked, onChange, title, note, right }: { name: string;
 function Row({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
     <div className="flex justify-between">
-      <dt className="text-cream-soft/65">{label}</dt>
-      <dd className={`tabular-nums ${accent ? "text-sky" : "text-cream"}`}>{value}</dd>
+      <dt className="text-cream/85">{label}</dt>
+      <dd className={`tabular-nums ${accent ? "text-cream" : "text-cream"}`}>{value}</dd>
     </div>
   );
 }
@@ -385,14 +384,14 @@ function Success({ order, email }: { order: Order; email: string }) {
 
   return (
     <div className="mx-auto flex min-h-[75vh] max-w-xl flex-col items-center justify-center px-4 py-16 text-center">
-      <motion.div initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", stiffness: 160, damping: 12 }} className="grid h-16 w-16 place-items-center rounded-full bg-sky text-ink">
+      <motion.div initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", stiffness: 160, damping: 12 }} className="grid h-16 w-16 place-items-center rounded-full bg-red text-cream">
         <IconCheck className="h-7 w-7" />
       </motion.div>
-      <p className="eyebrow mt-8 text-sky">Pedido {order.id}</p>
+      <p className="eyebrow mt-8 text-cream">Pedido {order.id}</p>
       <h1 className="mt-3 font-display text-5xl text-cream">
-        Pedido <span className="font-script text-sky">recebido</span>
+        Pedido <span className="font-script text-cream">recebido</span>
       </h1>
-      <p className="mt-4 text-cream-soft/70">
+      <p className="mt-4 text-cream/90">
         Enviamos os detalhes para <strong className="font-medium text-cream">{email}</strong>. Total de{" "}
         <strong className="font-medium tabular-nums text-cream">{formatBRL(order.total)}</strong>.
       </p>
@@ -401,8 +400,8 @@ function Success({ order, email }: { order: Order; email: string }) {
       {order.payment === "pix" && (
         <div className="label-frame w-full p-7">
           <p className="eyebrow text-cream">Pague com Pix</p>
-          <p className="mt-2 text-xs text-cream-soft/60">Código de demonstração, sem valor real.</p>
-          <p className="mt-4 break-all rounded-lg bg-brown-deep p-4 text-left font-mono text-xs leading-relaxed text-cream-soft/80">{pixCode}</p>
+          <p className="mt-2 text-xs text-cream/85">Código de demonstração, sem valor real.</p>
+          <p className="mt-4 break-all rounded-lg bg-green-deep p-4 text-left font-mono text-xs leading-relaxed text-cream/95">{pixCode}</p>
           <button
             className="btn btn-primary mt-5"
             onClick={async () => {
@@ -417,8 +416,8 @@ function Success({ order, email }: { order: Order; email: string }) {
           </button>
         </div>
       )}
-      {order.payment === "boleto" && <p className="text-sm text-cream-soft/70">O boleto foi enviado para o seu e-mail e vence em 3 dias úteis.</p>}
-      {order.payment === "cartao" && <p className="text-sm text-cream-soft/70">Pagamento aprovado. Seu pedido já está sendo separado.</p>}
+      {order.payment === "boleto" && <p className="text-sm text-cream/90">O boleto foi enviado para o seu e-mail e vence em 3 dias úteis.</p>}
+      {order.payment === "cartao" && <p className="text-sm text-cream/90">Pagamento aprovado. Seu pedido já está sendo separado.</p>}
 
       <Link href="/loja" className="btn btn-ghost mt-10">
         Continuar comprando

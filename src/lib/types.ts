@@ -1,34 +1,4 @@
-export type ArtKind =
-  | "paper"
-  | "tips"
-  | "glassTip"
-  | "grinder"
-  | "flipLighter"
-  | "torch"
-  | "matches"
-  | "pipe"
-  | "churchwarden"
-  | "tin"
-  | "hookah"
-  | "essence"
-  | "coal"
-  | "cigar"
-  | "cutter"
-  | "humidor"
-  | "ashtray"
-  | "tray"
-  | "tube"
-  | "bong";
-
-export type Tone = "creme" | "azul";
-
-export type CategoryId =
-  | "sedas"
-  | "isqueiros"
-  | "cachimbos"
-  | "narguile"
-  | "charutos"
-  | "acessorios";
+export type CategoryId = "sedas" | "isqueiros" | "narguile" | "essencias" | "tabacos" | "acessorios";
 
 export type Category = { id: CategoryId; name: string; blurb: string };
 
@@ -48,10 +18,13 @@ export type Product = {
   variants: string[];
   badge?: string;
   stock: number;
-  /** Ilustração placeholder. Trocar por `image` quando houver fotos reais. */
-  art: ArtKind;
-  tone: Tone;
-  image?: string;
+  /** foto recortada (fundo transparente) em /public */
+  image: string;
+  /** dimensões do arquivo da foto, em pixels */
+  w: number;
+  h: number;
+  /** altura relativa da peça na arara e na órbita */
+  height: number;
 };
 
 export type Ritual = {

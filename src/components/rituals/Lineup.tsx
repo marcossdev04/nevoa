@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ART, ProductArt } from "@/components/art/ProductArt";
+import { ProductPhoto, units } from "@/components/ProductPhoto";
 import { useStore } from "@/components/store/StoreProvider";
 import { IconArrow, IconClose, IconPlus } from "@/components/ui";
 import { getCategories, getProductById } from "@/lib/api";
@@ -57,15 +57,15 @@ export function Lineup({ rituals }: { rituals: Ritual[] }) {
           <AnimatePresence mode="wait">
             {solo ? (
               <motion.div key={kit.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                <p className="eyebrow text-sky">Ritual {kit.number}</p>
+                <p className="eyebrow text-cream">Ritual {kit.number}</p>
                 <h1 className="mt-1 font-display text-3xl text-cream sm:text-4xl">{kit.name}</h1>
               </motion.div>
             ) : (
               <motion.div key="intro" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
                 <h1 className="font-display text-4xl text-cream sm:text-6xl">
-                  Monte o <em className="font-script not-italic text-sky">Ritual.</em>
+                  Monte o <em className="font-script not-italic text-cream">Ritual.</em>
                 </h1>
-                <p className="mt-3 max-w-sm text-sm text-cream-soft/65">
+                <p className="mt-3 max-w-sm text-sm text-cream/85">
                   Seis rituais, da peça principal ao último detalhe. Toque em um para ver as peças.
                 </p>
               </motion.div>
@@ -74,7 +74,7 @@ export function Lineup({ rituals }: { rituals: Ritual[] }) {
           {solo && (
             <button
               onClick={() => setSolo(false)}
-              className="eyebrow flex h-11 items-center gap-2 text-cream hover:text-sky"
+              className="eyebrow flex h-11 items-center gap-2 text-cream hover:text-cream"
             >
               Todos <IconClose className="h-4 w-4" />
             </button>
@@ -110,7 +110,7 @@ export function Lineup({ rituals }: { rituals: Ritual[] }) {
                   <span
                     className={`mt-5 block text-center transition-opacity duration-500 ${d || solo ? "opacity-0" : "opacity-100"}`}
                   >
-                    <span className="eyebrow text-sky">{k.number}</span>
+                    <span className="eyebrow text-cream">{k.number}</span>
                     <span className="mt-1 block font-display text-xl italic text-cream">{k.name}</span>
                   </span>
                 </motion.button>
@@ -122,17 +122,17 @@ export function Lineup({ rituals }: { rituals: Ritual[] }) {
         <div className="relative z-10 flex items-center justify-center gap-4 pb-6">
           <button
             onClick={() => go(active - 1)}
-            className="grid h-11 w-11 place-items-center rounded-full border border-brown-line text-cream hover:border-cream"
+            className="grid h-11 w-11 place-items-center rounded-full border border-green-line text-cream hover:border-cream"
             aria-label="Ritual anterior"
           >
             <IconArrow className="h-4 w-4 rotate-180" />
           </button>
-          <span className="eyebrow w-16 text-center tabular-nums text-cream-soft/60">
+          <span className="eyebrow w-16 text-center tabular-nums text-cream/85">
             {kit.number} / {String(kits.length).padStart(2, "0")}
           </span>
           <button
             onClick={() => go(active + 1)}
-            className="grid h-11 w-11 place-items-center rounded-full border border-brown-line text-cream hover:border-cream"
+            className="grid h-11 w-11 place-items-center rounded-full border border-green-line text-cream hover:border-cream"
             aria-label="Próximo ritual"
           >
             <IconArrow className="h-4 w-4" />
@@ -140,17 +140,17 @@ export function Lineup({ rituals }: { rituals: Ritual[] }) {
         </div>
       </section>
 
-      <aside className="border-t border-brown-line/60 bg-brown-deep/50 px-6 py-8 lg:border-l lg:border-t-0" aria-live="polite">
+      <aside className="border-t border-green-line/60 bg-green-deep/50 px-6 py-8 lg:border-l lg:border-t-0" aria-live="polite">
         <div className="flex items-baseline justify-between">
           <h2 className="font-display text-xl text-cream">Neste ritual</h2>
-          <span className="eyebrow text-cream-soft/50">{kit.products.length} peças</span>
+          <span className="eyebrow text-cream/80">{kit.products.length} peças</span>
         </div>
-        <p className="mt-1 text-xs text-cream-soft/60">{kit.tagline}</p>
+        <p className="mt-1 text-xs text-cream/85">{kit.tagline}</p>
 
         <AnimatePresence mode="wait">
           <motion.ul
             key={kit.id}
-            className="mt-6 divide-y divide-brown-line/50"
+            className="mt-6 divide-y divide-green-line/50"
             initial="hidden"
             animate="show"
             exit={{ opacity: 0 }}
@@ -164,23 +164,23 @@ export function Lineup({ rituals }: { rituals: Ritual[] }) {
               >
                 <Link
                   href={`/produto/${p.slug}`}
-                  className="relative h-[4.5rem] w-[4.5rem] shrink-0 rounded-lg bg-brown"
+                  className="relative h-[4.5rem] w-[4.5rem] shrink-0 rounded-lg bg-cream"
                   aria-label={p.name}
                 >
-                  <ProductArt kind={p.art} tone={p.tone} className="absolute inset-[13%] h-[74%] w-[74%]" />
+                  <ProductPhoto product={p} fill sizes="72px" className="p-[10%]" />
                 </Link>
                 <div className="min-w-0 flex-1">
-                  <p className="eyebrow !text-[0.56rem] text-sky">
+                  <p className="eyebrow !text-[0.56rem] text-cream">
                     {getCategories().find((c) => c.id === p.category)?.name}
                   </p>
-                  <Link href={`/produto/${p.slug}`} className="block font-display text-base leading-tight text-cream hover:text-sky">
+                  <Link href={`/produto/${p.slug}`} className="block font-display text-base leading-tight text-cream hover:text-cream">
                     {p.name}
                   </Link>
-                  <p className="mt-0.5 text-xs tabular-nums text-cream-soft/70">{formatBRL(p.price)}</p>
+                  <p className="mt-0.5 text-xs tabular-nums text-cream/90">{formatBRL(p.price)}</p>
                 </div>
                 <button
-                  onClick={(e) => add(p, p.variants[0], 1, e.currentTarget.closest("li")?.querySelector("svg"))}
-                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-brown-line text-cream transition-colors hover:border-cream hover:bg-cream hover:text-ink"
+                  onClick={(e) => add(p, p.variants[0], 1, e.currentTarget.closest("li")?.querySelector("a"))}
+                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-green-line text-cream transition-colors hover:border-cream hover:bg-cream hover:text-ink"
                   aria-label={`Adicionar ${p.name} ao carrinho`}
                 >
                   <IconPlus className="h-4 w-4" />
@@ -190,7 +190,7 @@ export function Lineup({ rituals }: { rituals: Ritual[] }) {
           </motion.ul>
         </AnimatePresence>
 
-        <p className="mt-4 text-sm leading-relaxed text-cream-soft/65">{kit.description}</p>
+        <p className="mt-4 text-sm leading-relaxed text-cream/85">{kit.description}</p>
         <button
           onClick={(e) => kit.products.forEach((p, i) => add(p, p.variants[0], 1, i === 0 ? e.currentTarget : null))}
           className="btn btn-primary mt-6 w-full"
@@ -207,7 +207,7 @@ function Scene({ kit, width }: { kit: Kit; width: number }) {
   const [hero, ...sides] = kit.products;
   const s = width / 380;
   const fit = (p: Product, maxH: number, maxW: number) => {
-    const a = ART[p.art];
+    const a = units(p);
     return a.w * Math.min(maxH / a.h, maxW / a.w) * s;
   };
   const left = sides.slice(0, 1);
@@ -215,16 +215,16 @@ function Scene({ kit, width }: { kit: Kit; width: number }) {
 
   return (
     <span className="relative flex items-end justify-center gap-[3%] px-[4%]" style={{ height: 330 * s }}>
-      <span className="absolute bottom-3 left-1/2 h-[92%] w-[66%] -translate-x-1/2 rounded-t-full border border-sky/35" />
-      <span className="absolute bottom-3 left-1/2 h-[86%] w-[60%] -translate-x-1/2 rounded-t-full border border-sky/15" />
+      <span className="absolute bottom-3 left-1/2 h-[92%] w-[66%] -translate-x-1/2 rounded-t-full border border-cream/55" />
+      <span className="absolute bottom-3 left-1/2 h-[86%] w-[60%] -translate-x-1/2 rounded-t-full border border-cream/35" />
       <span className="absolute bottom-0 left-1/2 h-5 w-[88%] -translate-x-1/2 rounded-[50%] bg-ink/45 blur-md" />
       {left.map((p) => (
-        <ProductArt key={p.id} kind={p.art} tone={p.tone} className="relative mb-3 shrink-0" style={{ width: fit(p, 120, 84) }} />
+        <ProductPhoto key={p.id} product={p} sizes="140px" className="relative mb-3 shrink-0 drop-shadow-[0_10px_10px_rgba(0,0,0,.25)]" style={{ width: fit(p, 130, 96) }} />
       ))}
-      <ProductArt kind={hero.art} tone={hero.tone} className="relative mb-3 shrink-0" style={{ width: fit(hero, 280, 176) }} />
+      <ProductPhoto product={hero} sizes="260px" eager className="relative mb-3 shrink-0 drop-shadow-[0_14px_14px_rgba(0,0,0,.28)]" style={{ width: fit(hero, 285, 180) }} />
       <span className="relative mb-3 flex shrink-0 flex-col items-center gap-2">
         {right.map((p) => (
-          <ProductArt key={p.id} kind={p.art} tone={p.tone} style={{ width: fit(p, 96, 76) }} />
+          <ProductPhoto key={p.id} product={p} sizes="120px" className="drop-shadow-[0_8px_8px_rgba(0,0,0,.25)]" style={{ width: fit(p, 100, 84) }} />
         ))}
       </span>
     </span>

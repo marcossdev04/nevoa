@@ -17,26 +17,26 @@ export function AccountForm() {
     >
       {mode === "criar" && (
         <label className="block">
-          <span className="mb-2 block text-xs text-cream-soft/70">Nome completo</span>
+          <span className="mb-2 block text-xs text-cream/90">Nome completo</span>
           <input className="field" required autoComplete="name" />
         </label>
       )}
       <label className="block">
-        <span className="mb-2 block text-xs text-cream-soft/70">E-mail</span>
+        <span className="mb-2 block text-xs text-cream/90">E-mail</span>
         <input className="field" type="email" required autoComplete="email" />
       </label>
       <label className="block">
-        <span className="mb-2 block text-xs text-cream-soft/70">Senha</span>
+        <span className="mb-2 block text-xs text-cream/90">Senha</span>
         <input className="field" type="password" required minLength={6} autoComplete={mode === "entrar" ? "current-password" : "new-password"} />
       </label>
 
       <button className="btn btn-primary !mt-7 w-full">{mode === "entrar" ? "Entrar" : "Criar conta"}</button>
 
-      <p aria-live="polite" className="min-h-5 text-center text-sm text-sky">
+      <p aria-live="polite" className="min-h-5 text-center text-sm text-cream">
         {sent && "Contas ainda não estão disponíveis nesta versão de demonstração."}
       </p>
 
-      <p className="text-center text-sm text-cream-soft/60">
+      <p className="text-center text-sm text-cream/85">
         {mode === "entrar" ? "Ainda não tem conta?" : "Já tem conta?"}{" "}
         <button
           type="button"

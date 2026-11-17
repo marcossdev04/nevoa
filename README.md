@@ -21,9 +21,11 @@ Abra http://localhost:3000.
 
 | Cor | Hex | Uso |
 | --- | --- | --- |
-| Marrom | `#39282C` | fundo |
-| Bege | `#F9DF8E` | texto, botões, peças |
-| Azul bebê | `#9CB7D3` | destaques e detalhes |
+| Verde | `#018D3E` | fundo |
+| Creme | `#FDF7E6` | texto, botões e cards de produto |
+| Vermelho | `#E71506` | etiquetas de preço, selos e destaques |
+
+Os tokens ficam em `src/app/globals.css`. O vermelho não é usado como cor de texto sobre o verde, porque o contraste é baixo.
 
 Tipografia: Bodoni Moda (títulos), Yesteryear (assinatura manuscrita) e Jost (interface).
 
@@ -62,7 +64,13 @@ Outros pontos:
 
 ## Imagens dos produtos
 
-As peças são **ilustrações SVG provisórias** (`src/components/art/ProductArt.tsx`), desenhadas no estilo de rótulo da marca. Para usar fotos reais, preencha o campo `image` do produto e renderize `<Image />` no lugar de `<ProductArt />`. Fotos recortadas (PNG com fundo transparente) preservam o efeito da arara e da órbita.
+As fotos ficam em `public/produtos/` e são **ilustrativas**: vieram do catálogo público da loja Nova Panda e tiveram o fundo removido (WebP com transparência), o que permite o efeito de peça recortada na arara, nos rituais e na órbita. Nomes e preços dos produtos seguem as fotos, mas descrições, variações e estoque são inventados.
+
+Antes de publicar a loja, troque por fotos próprias ou com autorização de uso do fornecedor. Para cada produto em `src/data/products.ts`:
+
+- `image`: caminho do arquivo em `public/`
+- `w` e `h`: dimensões do arquivo em pixels
+- `height`: altura relativa da peça na arara e na órbita (um narguilé é mais alto que um cortador)
 
 ## Aviso
 

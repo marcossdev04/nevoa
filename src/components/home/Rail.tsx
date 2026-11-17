@@ -11,7 +11,7 @@ import {
   useVelocity,
   type MotionValue,
 } from "motion/react";
-import { ART, ProductArt } from "@/components/art/ProductArt";
+import { ProductPhoto, units } from "@/components/ProductPhoto";
 import { useStore } from "@/components/store/StoreProvider";
 import { IconArrow } from "@/components/ui";
 import { formatBRL } from "@/lib/format";
@@ -58,7 +58,7 @@ export function Rail({ products }: { products: Product[] }) {
         }}
       >
         {/* varão */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[5px] bg-gradient-to-b from-cream via-cream to-[#b89f5c] shadow-[0_3px_10px_rgba(0,0,0,.35)]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[5px] bg-gradient-to-b from-cream via-cream to-[#cfc7a8] shadow-[0_3px_10px_rgba(0,0,0,.35)]" />
 
         <motion.div
           ref={track}
@@ -86,17 +86,17 @@ export function Rail({ products }: { products: Product[] }) {
       </div>
 
       <div className="mx-auto flex max-w-[1500px] items-center justify-between px-4 sm:px-8">
-        <p className="eyebrow text-cream-soft/50">Arraste · clique na peça</p>
+        <p className="eyebrow text-cream/80">Arraste · clique na peça</p>
         <div className="flex gap-2">
           <button
-            className="grid h-11 w-11 place-items-center rounded-full border border-brown-line text-cream transition-colors hover:border-cream"
+            className="grid h-11 w-11 place-items-center rounded-full border border-green-line text-cream transition-colors hover:border-cream"
             onClick={() => glide(x.get() + (wrap.current?.clientWidth ?? 600) * 0.6)}
             aria-label="Peças anteriores"
           >
             <IconArrow className="h-4 w-4 rotate-180" />
           </button>
           <button
-            className="grid h-11 w-11 place-items-center rounded-full border border-brown-line text-cream transition-colors hover:border-cream"
+            className="grid h-11 w-11 place-items-center rounded-full border border-green-line text-cream transition-colors hover:border-cream"
             onClick={() => glide(x.get() - (wrap.current?.clientWidth ?? 600) * 0.6)}
             aria-label="Próximas peças"
           >
@@ -123,7 +123,7 @@ function Hanging({
   onOpen: () => void;
   onFocus: (el: HTMLElement) => void;
 }) {
-  const art = ART[product.art];
+  const art = units(product);
   const string = STRINGS[index % STRINGS.length];
   // cada peça balança um pouco diferente, as mais compridas menos
   const factor = (0.7 + ((index * 37) % 10) / 16) * (art.h > 250 ? 0.6 : 1);
@@ -147,23 +147,19 @@ function Hanging({
 
       {/* etiqueta de preço */}
       <span className="absolute left-1/2 top-3 z-10 origin-top-left rotate-[9deg] transition-transform duration-500 ease-out-soft group-hover:rotate-[-4deg]">
-        <span className="ml-1.5 mt-2 block rounded-[3px] bg-cream-soft px-1.5 py-1 text-[0.625rem] font-semibold tabular-nums leading-none text-ink shadow-md">
+        <span className="ml-1.5 mt-2 block rounded-[3px] bg-red px-1.5 py-1 text-[0.625rem] font-semibold tabular-nums leading-none text-cream shadow-md">
           {formatBRL(product.price)}
         </span>
       </span>
 
-      <span
-        className="block"
-        style={{ marginTop: `calc(var(--k) * ${-(art.hang ?? 0) * art.h}px)` }}
-      >
       <span className="block transition-transform duration-500 ease-out-soft group-hover:translate-y-2 group-hover:scale-[1.06] group-focus-visible:scale-[1.06]">
-        <ProductArt
-          kind={product.art}
-          tone={product.tone}
+        <ProductPhoto
+          product={product}
+          sizes="260px"
+          eager={index < 8}
           className="block drop-shadow-[0_14px_14px_rgba(0,0,0,.28)]"
           style={{ width: `calc(var(--k) * ${art.w}px)` }}
         />
-      </span>
       </span>
 
       <span className="pointer-events-none mt-4 max-w-[11rem] text-center font-display text-sm italic leading-tight text-cream opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">

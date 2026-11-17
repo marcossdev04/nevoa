@@ -47,19 +47,19 @@ export function ShopClient({ products, categories }: { products: Product[]; cate
     <div className="mx-auto max-w-[1500px] px-4 pt-12 sm:px-8 sm:pt-16">
       <header className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="eyebrow text-sky">{current ? current.blurb : "Coleção completa"}</p>
+          <p className="eyebrow text-cream">{current ? current.blurb : "Coleção completa"}</p>
           <h1 className="mt-3 font-display text-5xl text-cream sm:text-7xl">{current ? current.name : "A Loja"}</h1>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row">
           <label className="relative block sm:w-72">
             <span className="sr-only">Buscar produtos</span>
-            <IconSearch className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-cream-soft/50" />
+            <IconSearch className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-cream/80" />
             <input
               ref={search}
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Buscar seda, isqueiro, cachimbo…"
+              placeholder="Buscar seda, isqueiro, narguilé…"
               className="field !rounded-full !pl-11"
             />
           </label>
@@ -86,17 +86,17 @@ export function ShopClient({ products, categories }: { products: Product[]; cate
               onClick={() => setCategory(c.id)}
               aria-pressed={on}
               className={`flex min-h-11 shrink-0 items-center gap-2 rounded-full border px-5 text-sm transition-colors ${
-                on ? "border-cream bg-cream text-ink" : "border-brown-line text-cream-soft hover:border-cream"
+                on ? "border-cream bg-cream text-ink" : "border-green-line text-cream hover:border-cream"
               }`}
             >
               {c.name}
-              <span className={`text-[0.65rem] tabular-nums ${on ? "text-ink/60" : "text-cream-soft/45"}`}>{n}</span>
+              <span className={`text-[0.65rem] tabular-nums ${on ? "text-ink/60" : "text-cream/75"}`}>{n}</span>
             </button>
           );
         })}
       </nav>
 
-      <p className="mt-8 text-xs text-cream-soft/50" role="status">
+      <p className="mt-8 text-xs text-cream/80" role="status">
         {list.length} {list.length === 1 ? "produto" : "produtos"}
       </p>
 
@@ -120,7 +120,7 @@ export function ShopClient({ products, categories }: { products: Product[]; cate
       ) : (
         <div className="mt-16 text-center">
           <p className="font-display text-3xl italic text-cream">Nada por aqui</p>
-          <p className="mt-2 text-sm text-cream-soft/60">Não encontramos nada para “{query}”. Tente outro termo.</p>
+          <p className="mt-2 text-sm text-cream/85">Não encontramos nada para “{query}”. Tente outro termo.</p>
           <button
             className="btn btn-ghost mt-6"
             onClick={() => {

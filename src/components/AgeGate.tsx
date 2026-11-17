@@ -41,7 +41,7 @@ export function AgeGate() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="age-title"
-          className="fixed inset-0 z-[80] grid place-items-center overflow-y-auto bg-brown-deep/95 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[80] grid place-items-center overflow-y-auto bg-green-deep/95 p-4 backdrop-blur-sm"
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
@@ -49,9 +49,9 @@ export function AgeGate() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="label-frame w-full max-w-md bg-brown px-8 py-12 text-center"
+            className="label-frame w-full max-w-md bg-green px-8 py-12 text-center"
           >
-            <p className="eyebrow text-sky">Tabacaria fina</p>
+            <p className="eyebrow text-cream">Tabacaria fina</p>
             <p className="mt-1 font-script text-7xl leading-none text-cream">Névoa</p>
             <Ornament className="my-6" />
             {state === "ask" ? (
@@ -59,7 +59,7 @@ export function AgeGate() {
                 <h2 id="age-title" className="font-display text-2xl text-cream">
                   Você tem 18 anos ou mais?
                 </h2>
-                <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-cream-soft/70">
+                <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-cream/90">
                   Esta loja vende artigos de tabacaria, destinados exclusivamente a adultos.
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
@@ -76,10 +76,10 @@ export function AgeGate() {
                 <h2 id="age-title" className="font-display text-2xl text-cream">
                   Volte quando tiver 18
                 </h2>
-                <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-cream-soft/70">
+                <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-cream/90">
                   A venda de produtos de tabacaria é proibida para menores de idade.
                 </p>
-                <button onClick={() => setState("ask")} className="eyebrow mt-8 text-cream-soft/60 hover:text-cream">
+                <button onClick={() => setState("ask")} className="eyebrow mt-8 text-cream/85 hover:text-cream">
                   Respondi errado
                 </button>
               </>

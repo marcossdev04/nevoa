@@ -15,10 +15,10 @@ const yesteryear = Yesteryear({ variable: "--font-yesteryear", subsets: ["latin"
 export const metadata: Metadata = {
   title: { default: "Névoa — Tabacaria Fina", template: "%s · Névoa" },
   description:
-    "Névoa é uma tabacaria fina: sedas, isqueiros, cachimbos, narguilés, charutos e acessórios escolhidos a dedo. Venda proibida para menores de 18 anos.",
+    "Névoa é uma tabacaria fina: sedas, isqueiros, narguilés, essências, tabacos e acessórios escolhidos a dedo. Venda proibida para menores de 18 anos.",
 };
 
-export const viewport: Viewport = { themeColor: "#39282C" };
+export const viewport: Viewport = { themeColor: "#018D3E" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

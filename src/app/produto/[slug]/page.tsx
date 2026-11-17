@@ -21,7 +21,7 @@ export default async function ProductPage({ params }: PageProps<"/produto/[slug]
 
   return (
     <div className="mx-auto max-w-[1500px] px-4 pt-8 sm:px-8">
-      <nav aria-label="Você está em" className="flex flex-wrap items-center gap-2 text-xs text-cream-soft/50">
+      <nav aria-label="Você está em" className="flex flex-wrap items-center gap-2 text-xs text-cream/80">
         <Link href="/loja" className="hover:text-cream">
           Loja
         </Link>
@@ -30,13 +30,13 @@ export default async function ProductPage({ params }: PageProps<"/produto/[slug]
           {category.name}
         </Link>
         <span aria-hidden>/</span>
-        <span className="text-cream-soft/80">{product.name}</span>
+        <span className="text-cream/95">{product.name}</span>
       </nav>
 
       <ProductDetail product={product} categoryName={category.name} />
 
       <section className="mt-28">
-        <p className="eyebrow text-sky">Combina com</p>
+        <p className="eyebrow text-cream">Combina com</p>
         <h2 className="mt-3 font-display text-4xl text-cream">Você também pode gostar</h2>
         <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4 lg:gap-x-6">
           {getRelated(product).map((p) => (

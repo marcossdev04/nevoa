@@ -5,7 +5,7 @@ import { getCategories, getProducts } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Loja",
-  description: "Sedas, isqueiros, cachimbos, narguilés, charutos e acessórios de tabacaria.",
+  description: "Sedas, isqueiros, narguilés, essências, tabacos e acessórios de tabacaria.",
 };
 
 export default function LojaPage() {

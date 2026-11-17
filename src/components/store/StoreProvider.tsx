@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ProductArt } from "@/components/art/ProductArt";
+import { ProductPhoto } from "@/components/ProductPhoto";
 import { getProductById } from "@/lib/api";
 import type { CartLine, Product } from "@/lib/types";
 
@@ -141,7 +141,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           {flights.map((f) => (
             <motion.div
               key={f.key}
-              className="absolute left-0 top-0 flex items-center justify-center"
+              className="absolute left-0 top-0"
               style={{ width: f.from.width, height: f.from.height }}
               initial={{ x: f.from.left, y: f.from.top, scale: 1, opacity: 1, rotate: 0 }}
               animate={{
@@ -157,7 +157,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
                 setCartOpen(true);
               }}
             >
-              <ProductArt kind={f.product.art} tone={f.product.tone} className="h-full w-full" />
+              <ProductPhoto product={f.product} fill sizes="320px" eager />
             </motion.div>
           ))}
         </AnimatePresence>
